@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flight Sun – Sunrise/Sunset Estimator</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-512.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">☀️</div>
+      <h1>Flight Sun — Sunrise/Sunset Estimator</h1>
+    </header>
+    <div class="grid">
+      <section class="card">
+        <div class="stack">
+          <div>
+            <label for="route">ATC Route (paste)</label>
+            <textarea id="route" placeholder="e.g. OTHH DCT 51N020W 53N010W UL9 GOMUP DCT 5140N 00430E EGLL"></textarea>
+            <div class="help">Understands ICAO airports (EGLL, OTHH), 5-letter waypoints (GOMUP), and coordinates (51N020W, 5120N00430E, 51.5N 20.3W).</div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="off">Take-off (UTC)</label>
+              <input id="off" type="datetime-local" />
+            </div>
+            <div>
+              <label for="on">Expected Landing (UTC)</label>
+              <input id="on" type="datetime-local" />
+            </div>
+            <div>
+              <label for="crz">Cruise Altitude (feet)</label>
+              <input id="crz" type="number" inputmode="numeric" placeholder="35000" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="start">Start coordinate (lat,lon)</label>
+              <input id="start" placeholder="Optional override if route has no coords" />
+            </div>
+            <div>
+              <label for="end">End coordinate (lat,lon)</label>
+              <input id="end" placeholder="Optional override if route has no coords" />
+            </div>
+            <div>
+              <label for="step">Computation Step (seconds)</label>
+              <input id="step" type="number" value="60" />
+            </div>
+          </div>
+          <div class="flex">
+            <button class="btn btn-primary" id="calc">Calculate</button>
+            <button class="btn btn-secondary" id="save">Save Inputs</button>
+            <span id="status" class="pill muted">Idle</span>
+          </div>
+        </div>
+      </section>
+      <aside class="card">
+        <div class="stack">
+          <div class="flex">
+            <span class="pill">Offline Ready <span id="pwa" class="badge badge-warn">checking…</span></span>
+            <span class="pill">Time Step <span id="stepLabel" class="mono">60s</span></span>
+          </div>
+          <div class="spacer"></div>
+          <div class="results" id="results">
+            <div class="muted">Run a calculation to see results.</div>
+          </div>
+          <div class="legend muted">
+            <span><i class="dot dot-day"></i> Daylight</span>
+            <span><i class="dot dot-night"></i> Night</span>
+          </div>
+          <div class="map" id="map"></div>
+          <div class="footer muted">
+            All times UTC. Solar altitude threshold: -0.833°. Route is approximated great-circle between first &amp; last points.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
